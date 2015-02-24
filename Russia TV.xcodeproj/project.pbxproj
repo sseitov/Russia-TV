@@ -14,9 +14,12 @@
 		2C83F24E19EC338E00727A42 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C83F24C19EC338E00727A42 /* LaunchScreen.xib */; };
 		2C83F26519EC3BEF00727A42 /* TVController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2C83F26419EC3BEF00727A42 /* TVController.mm */; };
 		2C83F28119EC43EC00727A42 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C83F28019EC43EC00727A42 /* logo.png */; };
+		2CA7D57F1A9C9C1100DC7659 /* AudioStreamer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CA7D57A1A9C9C1100DC7659 /* AudioStreamer.mm */; };
+		2CA7D5801A9C9C1100DC7659 /* Demuxer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CA7D57C1A9C9C1100DC7659 /* Demuxer.mm */; };
+		2CA7D5811A9C9C1100DC7659 /* VTDecoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2CA7D57E1A9C9C1100DC7659 /* VTDecoder.mm */; };
+		2CA7D5841A9C9D2A00DC7659 /* VideoUtility.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA7D5821A9C9D2A00DC7659 /* VideoUtility.c */; };
+		2CA7D5861A9CA47500DC7659 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CA7D5851A9CA47500DC7659 /* VideoToolbox.framework */; };
 		ED9988B319ED18FE00B7D47D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988B219ED18FE00B7D47D /* QuartzCore.framework */; };
-		ED9988B519ED190700B7D47D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988B419ED190700B7D47D /* GLKit.framework */; };
-		ED9988B719ED191B00B7D47D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988B619ED191B00B7D47D /* OpenGLES.framework */; };
 		ED9988B919ED192C00B7D47D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988B819ED192C00B7D47D /* AVFoundation.framework */; };
 		ED9988BB19ED193400B7D47D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988BA19ED193400B7D47D /* AudioToolbox.framework */; };
 		ED9988C119ED195E00B7D47D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9988BE19ED195E00B7D47D /* CoreGraphics.framework */; };
@@ -47,12 +50,18 @@
 		2C83F26319EC3BEF00727A42 /* TVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVController.h; sourceTree = "<group>"; };
 		2C83F26419EC3BEF00727A42 /* TVController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TVController.mm; sourceTree = "<group>"; };
 		2C83F28019EC43EC00727A42 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		2CA7D5791A9C9C1100DC7659 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		2CA7D57A1A9C9C1100DC7659 /* AudioStreamer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioStreamer.mm; sourceTree = "<group>"; };
+		2CA7D57B1A9C9C1100DC7659 /* Demuxer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Demuxer.h; sourceTree = "<group>"; };
+		2CA7D57C1A9C9C1100DC7659 /* Demuxer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Demuxer.mm; sourceTree = "<group>"; };
+		2CA7D57D1A9C9C1100DC7659 /* VTDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTDecoder.h; sourceTree = "<group>"; };
+		2CA7D57E1A9C9C1100DC7659 /* VTDecoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VTDecoder.mm; sourceTree = "<group>"; };
+		2CA7D5821A9C9D2A00DC7659 /* VideoUtility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = VideoUtility.c; sourceTree = "<group>"; };
+		2CA7D5831A9C9D2A00DC7659 /* VideoUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoUtility.h; sourceTree = "<group>"; };
+		2CA7D5851A9CA47500DC7659 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		ED9988B219ED18FE00B7D47D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		ED9988B419ED190700B7D47D /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		ED9988B619ED191B00B7D47D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		ED9988B819ED192C00B7D47D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ED9988BA19ED193400B7D47D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		ED9988BC19ED193F00B7D47D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		ED9988BE19ED195E00B7D47D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ED9988BF19ED195E00B7D47D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		ED9988C019ED195E00B7D47D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -88,10 +97,9 @@
 				ED9988C219ED195E00B7D47D /* CoreMedia.framework in Frameworks */,
 				ED9988C519ED197300B7D47D /* CoreAudio.framework in Frameworks */,
 				ED9988C319ED195E00B7D47D /* CoreVideo.framework in Frameworks */,
+				2CA7D5861A9CA47500DC7659 /* VideoToolbox.framework in Frameworks */,
 				ED9988BB19ED193400B7D47D /* AudioToolbox.framework in Frameworks */,
 				ED9988B919ED192C00B7D47D /* AVFoundation.framework in Frameworks */,
-				ED9988B719ED191B00B7D47D /* OpenGLES.framework in Frameworks */,
-				ED9988B519ED190700B7D47D /* GLKit.framework in Frameworks */,
 				ED9988B319ED18FE00B7D47D /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,11 +177,9 @@
 				ED9988BE19ED195E00B7D47D /* CoreGraphics.framework */,
 				ED9988BF19ED195E00B7D47D /* CoreMedia.framework */,
 				ED9988C019ED195E00B7D47D /* CoreVideo.framework */,
-				ED9988BC19ED193F00B7D47D /* VideoToolbox.framework */,
+				2CA7D5851A9CA47500DC7659 /* VideoToolbox.framework */,
 				ED9988BA19ED193400B7D47D /* AudioToolbox.framework */,
 				ED9988B819ED192C00B7D47D /* AVFoundation.framework */,
-				ED9988B619ED191B00B7D47D /* OpenGLES.framework */,
-				ED9988B419ED190700B7D47D /* GLKit.framework */,
 				ED9988B219ED18FE00B7D47D /* QuartzCore.framework */,
 			);
 			name = Frameworks;
@@ -182,6 +188,14 @@
 		ED9988EB19ED288800B7D47D /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				2CA7D5791A9C9C1100DC7659 /* AudioStreamer.h */,
+				2CA7D57A1A9C9C1100DC7659 /* AudioStreamer.mm */,
+				2CA7D57B1A9C9C1100DC7659 /* Demuxer.h */,
+				2CA7D57C1A9C9C1100DC7659 /* Demuxer.mm */,
+				2CA7D57D1A9C9C1100DC7659 /* VTDecoder.h */,
+				2CA7D57E1A9C9C1100DC7659 /* VTDecoder.mm */,
+				2CA7D5821A9C9D2A00DC7659 /* VideoUtility.c */,
+				2CA7D5831A9C9D2A00DC7659 /* VideoUtility.h */,
 			);
 			name = Renderer;
 			sourceTree = "<group>";
@@ -259,7 +273,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C83F26519EC3BEF00727A42 /* TVController.mm in Sources */,
+				2CA7D5811A9C9C1100DC7659 /* VTDecoder.mm in Sources */,
+				2CA7D5841A9C9D2A00DC7659 /* VideoUtility.c in Sources */,
 				2C83F24019EC338E00727A42 /* AppDelegate.mm in Sources */,
+				2CA7D5801A9C9C1100DC7659 /* Demuxer.mm in Sources */,
+				2CA7D57F1A9C9C1100DC7659 /* AudioStreamer.mm in Sources */,
 				2C83F23D19EC338E00727A42 /* main.m in Sources */,
 				ED9988E119ED267700B7D47D /* MBProgressHUD.m in Sources */,
 			);
@@ -373,7 +391,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
@@ -397,7 +414,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (

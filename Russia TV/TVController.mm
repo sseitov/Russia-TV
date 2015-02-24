@@ -8,6 +8,7 @@
 
 #import "TVController.h"
 #import "MBProgressHUD.h"
+#import "Demuxer.h"
 
 static NSString* mediaURL[4] = {
     @"http://panels.telemarker.cc/stream/ort-tm.ts",
@@ -16,9 +17,18 @@ static NSString* mediaURL[4] = {
     @"http://panels.telemarker.cc/stream/ntv-tm.ts"
 };
 
-@interface TVController ()
+@interface TVController () {
+    dispatch_queue_t _videoOutputQueue;
+}
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *channels;
+@property (strong, nonatomic) Demuxer *demuxer;
+@property (strong, nonatomic) AVSampleBufferDisplayLayer *videoOutput;
+@property (strong, nonatomic) NSCondition *videoCondition;
+@property (atomic) BOOL stopped;
+@property (nonatomic) BOOL panelHidden;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *channels;
+- (IBAction)setChannel:(UISegmentedControl *)sender;
 
 @end
 
@@ -28,81 +38,119 @@ static NSString* mediaURL[4] = {
 {
     [super viewDidLoad];
     
-    _channels = [[UISegmentedControl alloc] initWithItems:@[@"ОРТ",@"РТР",@"ТВЦ",@"НТВ"]];
-    [_channels setImage:[UIImage imageNamed:@"ort"] forSegmentAtIndex:0];
-    [_channels setImage:[UIImage imageNamed:@"rtr"] forSegmentAtIndex:1];
-    [_channels setImage:[UIImage imageNamed:@"tvc"] forSegmentAtIndex:2];
-    [_channels setImage:[UIImage imageNamed:@"ntv"] forSegmentAtIndex:3];
+    _videoOutputQueue = dispatch_queue_create("com.vchannel.WD-Content.VideoOutput", DISPATCH_QUEUE_SERIAL);
     
-    _channels.center = CGPointMake(self.view.center.x, 50);
-    [_channels addTarget:self action:@selector(channelChanged:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:_channels];
+    _videoOutput = [[AVSampleBufferDisplayLayer alloc] init];
+    _videoOutput.videoGravity = AVLayerVideoGravityResizeAspect;
+    _videoOutput.backgroundColor = [[UIColor blackColor] CGColor];
     
-    [self performSelector:@selector(hideChannels) withObject:nil afterDelay:1.0];
+    CMTimebaseRef tmBase = nil;
+    CMTimebaseCreateWithMasterClock(CFAllocatorGetDefault(), CMClockGetHostTimeClock(),&tmBase);
+    _videoOutput.controlTimebase = tmBase;
+    CMTimebaseSetTime(_videoOutput.controlTimebase, kCMTimeZero);
+    CMTimebaseSetRate(_videoOutput.controlTimebase, 25.0);
+
+    _videoCondition = [[NSCondition alloc] init];
     
-    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(taspOnScreen:)];
-    [[self view] addGestureRecognizer:tap];
+    _demuxer = [[Demuxer alloc] init];
+    
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnScreen:)];
+    [self.view addGestureRecognizer:tap];
+    
+    self.stopped = YES;
     
     _channels.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"Channel"];
-    [self setChannel:(int)_channels.selectedSegmentIndex];
+    [self setChannel:_channels];
 }
 
-- (void)hideChannels
+- (void)layoutScreen
 {
-    [self showChannels:NO];
+    [_videoOutput removeFromSuperlayer];
+    _videoOutput.bounds = self.view.bounds;
+    _videoOutput.position = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
+    [self.view.layer addSublayer:_videoOutput];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    [UIView animateWithDuration:.3 animations:^(){
-        CGRect frame = _channels.frame;
-        frame.origin.x = (self.view.frame.size.width - frame.size.width)/2;
-        _channels.frame = frame;
-    }];
+    [self layoutScreen];
 }
 
-- (void)showChannels:(BOOL)show
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    [UIView animateWithDuration:.5 animations:^(){
-        CGRect frame = _channels.frame;
-        if (show) {
-            frame.origin.y = 20;
+    [self layoutScreen];
+}
+
+- (void)tapOnScreen:(UITapGestureRecognizer *)tap
+{
+    _panelHidden = !_panelHidden;
+    [self.navigationController setNavigationBarHidden:_panelHidden animated:YES];
+    [self layoutScreen];
+}
+
+- (IBAction)setChannel:(UISegmentedControl *)sender
+{
+    [self stop];
+    NSInteger channel = sender.selectedSegmentIndex;
+    [[NSUserDefaults standardUserDefaults] setInteger:channel forKey:@"Channel"];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_demuxer open:mediaURL[channel] completion:^(BOOL success) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^() {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+        if (success) {
+            [self play];
         } else {
-            frame.origin.y = -49.0;
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^() {
+                [self errorOpen];
+            }];
         }
-        frame.origin.x = (self.view.frame.size.width - frame.size.width)/2;
-        _channels.frame = frame;
     }];
-}
-
-- (void)taspOnScreen:(UITapGestureRecognizer*)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateEnded) {
-        [self showChannels:(_channels.frame.origin.y <= 0)];
-    }
-}
-
-- (IBAction)channelChanged:(UISegmentedControl *)sender
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:sender.selectedSegmentIndex forKey:@"Channel"];
-    [self setChannel:(int)sender.selectedSegmentIndex];
-    [self showChannels:NO];
-}
-
-- (void)setChannel:(int)channel
-{
 }
 
 - (void)errorOpen
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Error open TV channel"
                                                    delegate:nil
                                           cancelButtonTitle:@"Ok"
                                           otherButtonTitles:nil];
     [alert show];
+}
+
+
+- (void)play
+{
+    [_demuxer play];
+    
+    self.stopped = NO;
+    [_videoOutput requestMediaDataWhenReadyOnQueue:_videoOutputQueue usingBlock:^() {
+        [_videoCondition lock];
+        while (!self.stopped && _videoOutput.isReadyForMoreMediaData) {
+            CMSampleBufferRef buffer = [_demuxer takeVideo];
+            if (buffer) {
+                [_videoOutput enqueueSampleBuffer:buffer];
+                CFRelease(buffer);
+            } else {
+                break;
+            }
+        }
+        [_videoCondition signal];
+        [_videoCondition unlock];
+    }];
+}
+
+- (void)stop
+{
+    if (self.stopped) return;
+    
+    [_videoCondition lock];
+    self.stopped = YES;
+    [_videoOutput stopRequestingMediaData];
+    [_videoCondition wait];
+    [_videoCondition unlock];
+    [_videoOutput flushAndRemoveImage];
+    [_demuxer close];
 }
 
 @end

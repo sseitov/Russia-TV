@@ -1,26 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OGX-Fa-XsE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="IsO-mN-BfX">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Controller-->
-        <scene sceneID="IeK-4R-Pxf">
+        <!--Navigation Controller-->
+        <scene sceneID="O07-3N-l1N">
             <objects>
-                <viewController id="OGX-Fa-XsE" customClass="TVController" sceneMemberID="viewController">
+                <navigationController id="IsO-mN-BfX" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fJ8-Fk-hQg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.24313725490196078" green="0.38431372549019605" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="uc3-lK-vty" kind="relationship" relationship="rootViewController" id="aW0-VH-HDe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RuZ-gY-gfQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2012" y="-1962"/>
+        </scene>
+        <!--Controller-->
+        <scene sceneID="xMa-hF-tzJ">
+            <objects>
+                <viewController id="uc3-lK-vty" customClass="TVController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qfL-l0-Jp6"/>
-                        <viewControllerLayoutGuide type="bottom" id="9cp-eF-ivt"/>
+                        <viewControllerLayoutGuide type="top" id="d2W-61-RMB"/>
+                        <viewControllerLayoutGuide type="bottom" id="IpC-BD-jNL"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Hgl-18-XzE">
+                    <view key="view" contentMode="scaleToFill" id="DYH-vE-ZMV">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="08O-Qr-t2Q">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="3Tp-V2-fma">
+                            <rect key="frame" x="179" y="7" width="243" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="" image="ort" width="60"/>
+                                <segment title="" image="rtr" width="60"/>
+                                <segment title="" image="tvc" width="60"/>
+                                <segment title="" image="ntv" width="60"/>
+                            </segments>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="setChannel:" destination="uc3-lK-vty" eventType="valueChanged" id="4el-oa-7bX"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="channels" destination="3Tp-V2-fma" id="mCB-lU-eqF"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IJX-XE-IHH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GYh-yw-4L8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1778" y="-1971"/>
+            <point key="canvasLocation" x="-1349" y="-1962"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ntv" width="30" height="30"/>
+        <image name="ort" width="30" height="30"/>
+        <image name="rtr" width="30" height="30"/>
+        <image name="tvc" width="30" height="30"/>
+    </resources>
 </document>
