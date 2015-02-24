@@ -23,7 +23,6 @@ static NSString* mediaURL[4] = {
 
 @property (strong, nonatomic) Demuxer *demuxer;
 @property (strong, nonatomic) AVSampleBufferDisplayLayer *videoOutput;
-@property (strong, nonatomic) NSCondition *videoCondition;
 @property (atomic) BOOL stopped;
 @property (nonatomic) BOOL panelHidden;
 
@@ -49,9 +48,9 @@ static NSString* mediaURL[4] = {
     _videoOutput.controlTimebase = tmBase;
     CMTimebaseSetTime(_videoOutput.controlTimebase, kCMTimeZero);
     CMTimebaseSetRate(_videoOutput.controlTimebase, 25.0);
-
-    _videoCondition = [[NSCondition alloc] init];
     
+    [self.view.layer addSublayer:_videoOutput];
+
     _demuxer = [[Demuxer alloc] init];
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnScreen:)];
@@ -65,10 +64,8 @@ static NSString* mediaURL[4] = {
 
 - (void)layoutScreen
 {
-    [_videoOutput removeFromSuperlayer];
     _videoOutput.bounds = self.view.bounds;
     _videoOutput.position = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
-    [self.view.layer addSublayer:_videoOutput];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -97,14 +94,12 @@ static NSString* mediaURL[4] = {
     [_demuxer open:mediaURL[channel] completion:^(BOOL success) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^() {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
-        }];
-        if (success) {
-            [self play];
-        } else {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^() {
+            if (success) {
+                [self play];
+            } else {
                 [self errorOpen];
-            }];
-        }
+            }
+        }];
     }];
 }
 
@@ -125,7 +120,6 @@ static NSString* mediaURL[4] = {
     
     self.stopped = NO;
     [_videoOutput requestMediaDataWhenReadyOnQueue:_videoOutputQueue usingBlock:^() {
-        [_videoCondition lock];
         while (!self.stopped && _videoOutput.isReadyForMoreMediaData) {
             CMSampleBufferRef buffer = [_demuxer takeVideo];
             if (buffer) {
@@ -135,8 +129,6 @@ static NSString* mediaURL[4] = {
                 break;
             }
         }
-        [_videoCondition signal];
-        [_videoCondition unlock];
     }];
 }
 
@@ -144,12 +136,10 @@ static NSString* mediaURL[4] = {
 {
     if (self.stopped) return;
     
-    [_videoCondition lock];
     self.stopped = YES;
     [_videoOutput stopRequestingMediaData];
-    [_videoCondition wait];
-    [_videoCondition unlock];
     [_videoOutput flushAndRemoveImage];
+    
     [_demuxer close];
 }
 
