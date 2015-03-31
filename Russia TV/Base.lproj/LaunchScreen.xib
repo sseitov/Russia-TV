@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,12 +12,16 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="h3s-PO-xMd">
                     <rect key="frame" x="90" y="90" width="300" height="300"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="300" id="Hoe-O0-XIo"/>
+                        <constraint firstAttribute="width" constant="300" id="Ofo-8z-hfF"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="h3s-PO-xMd" secondAttribute="centerY" id="acg-Zo-KNr"/>
-                <constraint firstAttribute="centerX" secondItem="h3s-PO-xMd" secondAttribute="centerX" id="yXK-Ec-A7c"/>
+                <constraint firstAttribute="centerX" secondItem="h3s-PO-xMd" secondAttribute="centerX" id="Ykh-ac-FnU"/>
+                <constraint firstAttribute="centerY" secondItem="h3s-PO-xMd" secondAttribute="centerY" id="eE9-vx-Ppn"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -26,6 +29,6 @@
         </view>
     </objects>
     <resources>
-        <image name="logo.png" width="300" height="300"/>
+        <image name="logo.png" width="1024" height="1024"/>
     </resources>
 </document>
