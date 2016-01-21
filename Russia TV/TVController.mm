@@ -11,10 +11,10 @@
 #import "Demuxer.h"
 
 static NSString* mediaURL[4] = {
-    @"http://panels.telemarker.cc/stream/ort-tm.ts",
-    @"http://panels.telemarker.cc/stream/rtr-tm.ts",
-    @"http://panels.telemarker.cc/stream/tvc-tm.ts",
-    @"http://panels.telemarker.cc/stream/ntv-tm.ts"
+    @"url",
+    @"url",
+    @"url",
+    @"url"
 };
 
 @interface TVController () {
